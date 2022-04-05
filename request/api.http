@@ -1,0 +1,35 @@
+### https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+@hostname = localhost
+@port = 3000
+@host = http://{{hostname}}:{{port}}
+
+### 
+@api = /system
+
+### Read - List
+GET {{host}}{{api}}
+
+### Read /:id
+GET {{host}}{{api}}/1
+
+### Create
+POST {{host}}{{api}}
+Content-Type: application/json
+
+{
+  "key" : "myKey",
+  "value" : "myValue"
+}
+
+### Update
+PUT  {{host}}{{api}}/4
+Content-Type: application/json
+
+{
+  "key" : "4Key",
+  "value" : "4Value"
+}
+
+### Delete
+DELETE  {{host}}{{api}}/4
