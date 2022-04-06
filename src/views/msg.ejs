@@ -1,0 +1,61 @@
+<div class="position-fixed bottom-50 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Toast</strong>
+      <small>1s ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">  
+      Message
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <h1>EJS Test</h1>
+
+
+    <form class="row g-6 px-4">
+      <div class="col">
+        <!-- <label for="inputMessage" class="visually-hidden">Message</label> -->
+        <input type="text" class="form-control" id="inputMessage" autocomplete="off">
+      </div>
+      <div class="col-auto">
+        <button type="submit" id="btnSend" class="btn btn-primary mb-3">Send</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  const socket = io.connect()
+
+  socket.on('init', (str) => {
+    // console.log('socket.on init')
+  })
+
+
+  $("form").submit(function(e) {
+    // here's where you stop the default submit action of the form
+    e.preventDefault();
+
+    const data = {
+      msg: $("#inputMessage").val()
+    }
+
+    $.ajax({
+      type: "POST",
+      url: "msg/",
+      data: JSON.stringify(data),
+      dataType: 'json',
+      contentType: 'application/json; charset=utf-8'
+    }).done(function(res) {
+      $("#inputMessage").val('')
+      console.log(res.data);
+    }).fail(function(xhr, status, message) {
+      console.error(message)
+      $('.toast').toast('show');
+    });
+  });
+</script>
